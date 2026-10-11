@@ -1,0 +1,14 @@
+# Generated outputs (regenerable artifacts)
+output/
+
+# Duplicate of Dockerfile
+Dockerfile.txt
+
+# Build logs
+build.log
+*.log
+
+# Python
+__pycache__/
+*.pyc
+.venv/
