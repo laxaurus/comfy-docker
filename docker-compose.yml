@@ -19,7 +19,10 @@ services:
     ports:
       - "8189:8188"
     volumes:
-      - ${COMFY_MODELS}/models:/workspace/ComfyUI/models
+      # ---- Named volumes backed by /mnt/models on the NVMe ----
+      - comfy-models:/workspace/ComfyUI/models
+      - comfy-custom-nodes:/workspace/ComfyUI/custom_nodes
+      # ---- Keep output/input as bind mounts on the original disk ----
       - ${COMFY_ROOT}/output:/workspace/ComfyUI/output
       - ${COMFY_ROOT}/input:/workspace/ComfyUI/input
     environment:
@@ -32,3 +35,17 @@ services:
     command: >
       python main.py --listen 0.0.0.0 --enable-manager
       --enable-dynamic-vram --reserve-vram 0.5 --vram-headroom 2 --cache-none --use-pytorch-cross-attention
+
+volumes:
+  comfy-models:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /mnt/models/rx7900-models/comfy
+  comfy-custom-nodes:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /mnt/models/rx7900-models/comfy/custom_nodes

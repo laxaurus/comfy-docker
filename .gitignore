@@ -1,5 +1,6 @@
 # Generated outputs (regenerable artifacts)
 output/
+input/
 
 # Duplicate of Dockerfile
 Dockerfile.txt
